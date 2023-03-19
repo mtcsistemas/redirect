@@ -1,20 +1,18 @@
 require('dotenv').config();
-const express = require('express')
-const hbs = require('hbs');
-const open = require('open');
+const express = require('express');
+const _open = require('open');
 
 const app = express()
 const port = process.env.PORT;
 
 // Handlebars
 app.set('view engine', 'hbs');
-hbs.registerPartials( __dirname + '/views/partials');
 
 // Servir contenido estático
 //app.use( express.static('public') );
 
-app.get('/', async (req, res) => {
-    await open('https://choiz.com.mx', {app: {name: 'google chrome', arguments: ['--incognito']}});
+app.get('/', async (req: any, res: any) => {
+    await _open('https://choiz.com.mx', {app: {name: 'google chrome', arguments: ['--incognito']}});
     res.status(200).json({
         "redirect": true
     });
