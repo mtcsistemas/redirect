@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express')
 const hbs = require('hbs');
+const open = require('open');
 
 const app = express()
 const port = process.env.PORT;
@@ -10,31 +11,23 @@ app.set('view engine', 'hbs');
 hbs.registerPartials( __dirname + '/views/partials');
 
 // Servir contenido estático
-app.use( express.static('public') );
+//app.use( express.static('public') );
 
-app.get('/', (req, res) => {
-    res.render('home', {
-        nombre: 'Fernando Herrera',
-        titulo: 'Curso de Node'
+app.get('/', async (req, res) => {
+    await open('https://choiz.com.mx', {app: {name: 'google chrome', arguments: ['--incognito']}});
+    res.status(200).json({
+        "redirect": true
     });
+    // res.render('home', {
+    //     nombre: 'Fernando Herrera',
+    //     titulo: 'Curso de Node'
+    // });
 });
 
-app.get('/generic', (req, res) => {
-    res.render('generic', {
-        nombre: 'Fernando Herrera',
-        titulo: 'Curso de Node'
-    });
-});
-
-app.get('/elements', (req, res) => {
-    res.render('elements', {
-        nombre: 'Fernando Herrera',
-        titulo: 'Curso de Node'
-    });
-});
-
-// app.get('*', (req, res) => {
-//     res.sendFile( __dirname + '/public/index.html');
+// app.get('*', async (req, res) => {
+//     await open('https://choiz.com.mx', {app: {name: 'google chrome', arguments: ['--incognito']}});
+//     res.render('home');
+// //    res.sendFile( __dirname + '/public/index.html');
 // });
  
 app.listen(port, () => {
